@@ -13,6 +13,7 @@ public class GridTile : MonoBehaviour
 }
 */
 
+using System.Collections;
 using UnityEngine;
 
 public class GridTile : MonoBehaviour {
@@ -61,6 +62,35 @@ public class GridTile : MonoBehaviour {
     public void SetHover(bool isMouseHovered)
     {
         _tileRenderer.material.color = isMouseHovered ? _hoverColor : _actualColorOfTile;
+    }
+
+    public void Pulse()
+    {
+        StopAllCoroutines();
+        StartCoroutine(PulseOnClick());
+    }
+    private IEnumerator PulseOnClick()
+    {
+        float duration = 0.2f;
+        float elapsed = 0f;
+
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = startScale * 1.5f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(startScale,targetScale, elapsed/duration);
+            yield return null;
+        }
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(targetScale,startScale, elapsed/duration);
+            yield return null;
+        }
+        transform.localScale = startScale;
     }
 }
 

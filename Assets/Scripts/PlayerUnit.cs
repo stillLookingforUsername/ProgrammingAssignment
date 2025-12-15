@@ -6,11 +6,13 @@ public class PlayerUnit : Unit
     private PlayerInputActions _playerInputActions;
     private Camera _camera;
     public float playerAboveGround = 1.5f;
+    private GridTile _tile;
 
     private void Awake()
     {
         _playerInputActions = new PlayerInputActions();
         _camera = Camera.main;
+        _tile = GetComponent<GridTile>();
     }
     private void OnEnable()
     {
@@ -35,16 +37,34 @@ public class PlayerUnit : Unit
         Vector2 mousePos = _playerInputActions.Player.Point.ReadValue<Vector2>();
         Ray ray = _camera.ScreenPointToRay(mousePos);
 
-        if(Physics.Raycast(ray, out RaycastHit hitInfo))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
             GridTile tile = hitInfo.collider.GetComponent<GridTile>();
+            /*
             if(tile != null && !tile._isBlocked)
             {
+                //calling pulse frm GridTile
+                //_tile.Pulse();
+
                 var path = Pathfinder.FindPath(currentTile,tile);
                 if(path != null)
                 {
                     StartCoroutine(Move(path));
                 }
+            }
+            */
+            // Validate tile before doing anything
+            if (tile == null || tile._isBlocked || tile == currentTile)
+                return;
+
+            //Visual feedback FIRST
+            tile.Pulse();
+
+            //Then request movement
+            var path = Pathfinder.FindPath(currentTile, tile);
+            if (path != null)
+            {
+                StartCoroutine(Move(path));
             }
         }
     }

@@ -27,10 +27,12 @@ public class TileInfoUI : MonoBehaviour
         _playerInputActions.Disable();
     }
 
+    /*
     private void Update()
     {
         Vector2 mousePos = _playerInputActions.Player.Point.ReadValue<Vector2>();
         Ray ray = _mainCamera.ScreenPointToRay(mousePos);
+
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
@@ -57,10 +59,60 @@ public class TileInfoUI : MonoBehaviour
                 #endregion
             }
         }
+        #region HoverDetection region
         else if (_lastHoverTile != null)
         {
             _lastHoverTile.SetHover(false);
             _lastHoverTile = null;
         }
+        #endregion
     }
+    */
+    private void Update()
+    {
+        if (_mainCamera == null || tileInfoText == null)
+            return;
+
+        Vector2 mousePos = _playerInputActions.Player.Point.ReadValue<Vector2>();
+        Ray ray = _mainCamera.ScreenPointToRay(mousePos);
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            GridTile tile = hitInfo.collider.GetComponent<GridTile>();
+
+            if (tile == null)
+            {
+                ClearHover();
+                return;
+            }
+
+            tileInfoText.text = $"Tile Position: ({tile.x}, {tile.y})";
+
+            // Hover handling
+            if (tile != _lastHoverTile)
+            {
+                if (_lastHoverTile != null)
+                    _lastHoverTile.SetHover(false);
+
+                _lastHoverTile = tile;
+                _lastHoverTile.SetHover(true);
+            }
+        }
+        else
+        {
+            ClearHover();
+        }
+    }
+    private void ClearHover()
+    {
+        if (_lastHoverTile != null)
+        {
+            _lastHoverTile.SetHover(false);
+            _lastHoverTile = null;
+        }
+
+        tileInfoText.text = "";
+    }
+
+
 }
