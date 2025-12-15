@@ -4,6 +4,7 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager Instance;
 
+    public int tileSize = 2;
     public int gridWidth = 10;
     public int gridHeight = 10;
     public GameObject tilePrefab;
@@ -29,7 +30,7 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                GameObject tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity,transform);
+                GameObject tile = Instantiate(tilePrefab, new Vector3(x*tileSize, 0, y*tileSize), Quaternion.identity,transform);
                 tile.name = $"Tile_{x}_{y}";
                 GridTile gridTile = tile.GetComponent<GridTile>();
                 gridTile.x = x;
