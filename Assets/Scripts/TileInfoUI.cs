@@ -86,7 +86,7 @@ public class TileInfoUI : MonoBehaviour
                 return;
             }
 
-            tileInfoText.text = $"Tile Position: ({tile.x}, {tile.y})";
+            tileInfoText.text = $"Tile Position: ({tile.x + 1}, {tile.y + 1})";
 
             // Hover handling
             if (tile != _lastHoverTile)
