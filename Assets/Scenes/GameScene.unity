@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleData: {fileID: 11400000, guid: 877b79732ab5aa14ab7004ea1c4eb889, type: 2}
-  obstaclePrefab: {fileID: 7254362706471970586, guid: ac30b2f9cf7d11a47a6c5c5f4fec8e87, type: 3}
+  obstaclePrefab: {fileID: 2589815823400638606, guid: ba9d9e72e985c5e4186e6ddec825fe81, type: 3}
   _heightOffSet: 1
 --- !u!4 &697445426
 Transform:
