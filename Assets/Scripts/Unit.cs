@@ -1,26 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+
+//base class for grid unit
 
 public class Unit : MonoBehaviour
 {
-    protected float characterAboveGround = 1.5f;
+    protected float characterAboveGround = 1.5f; //offset value for character above the ground
     public GridTile currentTile;
     public bool isMoving;
-
-    //[Header("Animation")]
-    //[SerializeField] protected Animator animator;
-
-/*
-    protected virtual void Awake()
-    {
-        if (animator == null)
-        {
-            animator = GetComponentInChildren<Animator>();
-        }
-    }
-    */
 
     #region ToRoateCharacter Towards the direction
     [SerializeField] protected float turnSpeed = 10f;
@@ -43,52 +31,32 @@ public class Unit : MonoBehaviour
     public IEnumerator Move(List<GridTile> path)
     {
         isMoving = true;
-        //animator.SetBool("isMovingAnimatorParam", true);
-        //animator.SetBool("isMovingAnimatorParam", isMoving);
-        /*
-        foreach(GridTile tile in path)
+        foreach (GridTile tile in path)
         {
-            isMoving = true;
+            Vector3 startPos = transform.position; //store current posiiton of the character
+            Vector3 endPos = tile.WorldPosition + Vector3.up * characterAboveGround;    //calculate end position
 
-            //snap to tile offset for y-axis
-            transform.position = tile.WorldPosition + Vector3.up * characterAboveGround;
-            currentTile = tile;
-            //endregion
+            Vector3 moveDir = (endPos - startPos).normalized;
 
-            //PositionCharacterToTile(tile);
-            yield return new WaitForSeconds(0.3f);
-        }
-        */
-         foreach (GridTile tile in path)
-        {
-        Vector3 startPos = transform.position;
-        Vector3 endPos = tile.WorldPosition + Vector3.up * characterAboveGround;
+            float t = 0f;
+            float moveDuration = 0.25f;
 
-        Vector3 moveDir = (endPos - startPos).normalized;
+            while (t < 1f)
+            {
+                RotateCharacter(moveDir);
 
-        float t = 0f;
-        float moveDuration = 0.25f;
-
-        while (t < 1f)
-        {
-            RotateCharacter(moveDir);
-
-            transform.position = Vector3.Lerp(startPos, endPos, t);
-            t += Time.deltaTime / moveDuration;
-            yield return null;
-        }
+                transform.position = Vector3.Lerp(startPos, endPos, t);
+                t += Time.deltaTime / moveDuration;
+                yield return null;
+            }
 
         // Snap to exact tile position
-        transform.position = endPos;
+            transform.position = endPos;
 
-        currentTile = tile;
-        yield return new WaitForSeconds(0.3f);
+            currentTile = tile;
+            yield return new WaitForSeconds(0.3f);
         }
-
-
         isMoving = false;
-        //animator.SetBool("isMovingAnimatorParam", false);
-        //animator.SetBool("isMovingAnimatorParam", isMoving);
-        //animator.SetBool("isMovingAnimatorParam", false);
     }
 }
+

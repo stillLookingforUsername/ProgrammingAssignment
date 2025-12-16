@@ -879,7 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4102c85283ca49b478cbdee1bab9dd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSize: 2
+  tileSize: 2.2
   gridWidth: 10
   gridHeight: 10
   tilePrefab: {fileID: 4882471781877677982, guid: ff295f0896a03c94f80b74a86c9bc2f4, type: 3}
@@ -6516,7 +6516,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: hello hello hello
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7aab21c26381e4945aff2050857edd40, type: 2}
   m_sharedMaterial: {fileID: -8545443458845253657, guid: 7aab21c26381e4945aff2050857edd40, type: 2}

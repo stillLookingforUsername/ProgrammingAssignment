@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//class to moves a grid using mouse click
+//inherit from Unit class
 public class PlayerUnit : Unit
 {
     private PlayerInputActions _playerInputActions;
     private Camera _camera;
-    public float playerAboveGround = 1.5f;
+    public float playerAboveGround = 1.5f;  //player height offset with respect to the ground
     private GridTile _tile;
 
     private void Awake()
@@ -17,7 +19,7 @@ public class PlayerUnit : Unit
     private void OnEnable()
     {
         _playerInputActions.Player.Enable();
-        _playerInputActions.Player.Click.performed += OnClick;
+        _playerInputActions.Player.Click.performed += OnClick; 
     }
     private void OnDisable()
     {
@@ -27,10 +29,11 @@ public class PlayerUnit : Unit
 
     private void Start()
     {
-        currentTile = GridManager.Instance.GetTileAtPosition(0, 0);
-        transform.position = currentTile.WorldPosition + Vector3.up * playerAboveGround;
+        currentTile = GridManager.Instance.GetTileAtPosition(0, 0); //set starting tile
+        transform.position = currentTile.WorldPosition + Vector3.up * playerAboveGround; //set height of player
     }
     
+    //trigger function when player click
     public void OnClick(InputAction.CallbackContext ctx)
     {
         if(isMoving) return;
@@ -39,29 +42,19 @@ public class PlayerUnit : Unit
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
-            GridTile tile = hitInfo.collider.GetComponent<GridTile>();
-            /*
-            if(tile != null && !tile._isBlocked)
-            {
-                //calling pulse frm GridTile
-                //_tile.Pulse();
+            GridTile tile = hitInfo.collider.GetComponent<GridTile>();  //store grid tile when we click a grid
 
-                var path = Pathfinder.FindPath(currentTile,tile);
-                if(path != null)
-                {
-                    StartCoroutine(Move(path));
-                }
-            }
-            */
-            // Validate tile before doing anything
+            //return if tile is blocked,invalid,null
             if (tile == null || tile._isBlocked || tile == currentTile)
+            {
                 return;
-
-            //Visual feedback FIRST
+            }
+            //tiles pulse when clicked
             tile.Pulse();
 
-            //Then request movement
+            //return a path from Pathfinder.FindPath() & store it in path
             var path = Pathfinder.FindPath(currentTile, tile);
+
             if (path != null)
             {
                 StartCoroutine(Move(path));

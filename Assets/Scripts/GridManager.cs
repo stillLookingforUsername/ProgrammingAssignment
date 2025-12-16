@@ -23,6 +23,7 @@ public class GridManager : MonoBehaviour
         GenerateGrid();
     }
     
+    
     //function to spawn tiles with respect to their position
     private void GenerateGrid()
     {
