@@ -31,9 +31,18 @@ public class GridTile : MonoBehaviour {
     [SerializeField] private Renderer _tileRenderer;
     [SerializeField] private Color _hoverColor = Color.cyan;
 
+    private void Start()
+    {
+        _hoverColor = Color.cyan;
+    }
+
     private Color _actualColorOfTile;
 
-    public Vector3 WorldPosition => basePosition;
+    //public Vector3 WorldPosition => basePosition;
+    public Vector3 WorldPosition
+    {
+        get { return basePosition;}
+    }
 
     private void Awake()
     {
@@ -53,9 +62,7 @@ public class GridTile : MonoBehaviour {
 
     private void Update()
     {
-        float yOffset =
-            Mathf.Sin(Time.time * bobSpeed + phaseOffset) * bobHeight;
-
+        float yOffset = Mathf.Sin(Time.time * bobSpeed + phaseOffset) * bobHeight;
         transform.position = basePosition + Vector3.up * yOffset;
     }
 

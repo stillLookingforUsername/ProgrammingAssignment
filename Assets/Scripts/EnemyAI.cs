@@ -40,9 +40,12 @@ public class EnemyAI : Unit, IEnemy
         };
 
         foreach (var t in options)
+        {
             if (t != null && !t._isBlocked)
+            {
                 return t;
-
+            }
+        }
         return null;
     }
 }

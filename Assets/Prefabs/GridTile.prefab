@@ -124,3 +124,5 @@ MonoBehaviour:
   x: 0
   y: 0
   _isBlocked: 0
+  _tileRenderer: {fileID: 0}
+  _hoverColor: {r: 1, g: 1, b: 1, a: 1}

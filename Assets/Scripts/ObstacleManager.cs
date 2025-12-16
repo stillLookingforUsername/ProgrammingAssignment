@@ -4,6 +4,7 @@ public class ObstacleManager : MonoBehaviour
 {
     public ObstacleData obstacleData;
     public GameObject obstaclePrefab;
+    [SerializeField] private float _heightOffSet = 0.6f;
 
     private void Start()
     {
@@ -15,7 +16,7 @@ public class ObstacleManager : MonoBehaviour
                 {
                     GridTile tile = GridManager.Instance.GetTileAtPosition(x,y);
                     tile._isBlocked = true;
-                    Instantiate(obstaclePrefab, tile.WorldPosition + Vector3.up * 0.5f, Quaternion.identity);
+                    Instantiate(obstaclePrefab, tile.WorldPosition + Vector3.up * _heightOffSet, Quaternion.identity);
                 }
             }
         }
