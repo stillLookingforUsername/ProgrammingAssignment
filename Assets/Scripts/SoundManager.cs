@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//to manage sound
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
@@ -30,7 +31,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
         _audioSourceBG.clip = _audioClipBG;
-        _audioSourceBG.loop = true; //play on loop
+        _audioSourceBG.loop = true;
         _audioSourceBG.Play();
     }
 }
