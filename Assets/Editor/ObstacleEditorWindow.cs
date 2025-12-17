@@ -26,7 +26,8 @@ public class ObstacleEditorWindow : EditorWindow
             for (int x = 0; x < 10; x++)
             {
                 int index = y * 10 + x; //2d grid
-                _data.blockedTiles[index] = GUILayout.Toggle(_data.blockedTiles[index], "");
+                string label = $"{x+1},{y+1}";
+                _data.blockedTiles[index] = GUILayout.Toggle(_data.blockedTiles[index],label, GUILayout.Width(45), GUILayout.Height(25));
             }
             EditorGUILayout.EndHorizontal();
         }
