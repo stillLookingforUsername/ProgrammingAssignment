@@ -6,7 +6,7 @@ public class ObstacleEditorWindow : EditorWindow
 {
     private ObstacleData _data;
 
-    [MenuItem("Tools/Obstacle Editor")]
+    [MenuItem("Tools/Obstacle Editor")] //location of Editor
     private static void Open()
     {
         GetWindow<ObstacleEditorWindow>("Obstacle Editor");
@@ -15,14 +15,17 @@ public class ObstacleEditorWindow : EditorWindow
     private void OnGUI()
     {
         _data = (ObstacleData)EditorGUILayout.ObjectField("Obstacle Data", _data, typeof(ObstacleData), false);
-        if (_data == null) return;
+        if (_data == null) 
+        {
+            return; //return if no data
+        }
 
         for (int y = 9; y >= 0; y--)
         {
             EditorGUILayout.BeginHorizontal();
             for (int x = 0; x < 10; x++)
             {
-                int index = y * 10 + x;
+                int index = y * 10 + x; //2d grid
                 _data.blockedTiles[index] = GUILayout.Toggle(_data.blockedTiles[index], "");
             }
             EditorGUILayout.EndHorizontal();
